@@ -1,0 +1,23 @@
+{
+  "summary": "Regression retest for ChemShield 'Invalid API key' bug. Ran full backend suite (17 existing tests) + 3 new targeted regression tests. All 20 tests PASS. Confirmed: (a) POST /api/scans does not leak 'Invalid API key' — response either returns success fields or a friendly bucket message; (b) GET /api/scans for demo user contains no stale docs with 'Invalid API key' substring (cleanup verified); (c) all previously-passing endpoints (auth register/login/me, google callback rejection, scan CRUD, file download bearer + ?auth= query, cross-user 403, stats summary) still work; (d) static review of create_scan() in server.py confirms the 3-bucket friendly-error mapping (invalid api key/authenticationerror/unauthorized -> temporarily unavailable; timeout -> timed out; else -> could not be completed).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/backend/tests/test_regression_apikey.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py create_scan() correctly catches upstream exception and stores only a friendly string, preventing future stale-error leaks — LGTM.",
+    "Consider adding a startup sweep that deletes any legacy scan doc whose error field matches /invalid api key/i, as belt-and-suspenders for other environments."
+  ],
+  "updated_files": ["/app/backend/tests/test_regression_apikey.py"],
+  "success_rate": {"backend": "100% (20/20)", "frontend": "not tested (skipped per request)"},
+  "test_credentials": "demo@chemshield.ai / Demo@1234 (JWT)",
+  "seed_data_creation": "None — used auto-seeded demo user. Created transient TEST_ users during test_register_new_user and test_07_other_user_forbidden.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend fully green. Regression file test_regression_apikey.py should stay in the suite to guard against future re-introduction of raw litellm/openai error leakage. Sample image at /tmp/label.jpg. If missing, re-fetch: curl -s -o /tmp/label.jpg 'https://images.unsplash.com/photo-1585421514738-01798e348b17?w=800&q=60'.",
+  "rca of the issue": "Original user report ('showing api key error again') was NOT a live failure — the EMERGENT_LLM_KEY is valid and current scans succeed. Root cause was 18 legacy scan documents persisted in db.scans from before the earlier .env fix, each with error='AI analysis failed: ... litellm.AuthenticationError: OpenAIException - Invalid API key'. These surfaced on Dashboard/Scan History and looked like fresh failures. Mitigation applied by main agent: (1) db.scans.deleteMany({error: /Invalid API key/i}) removed 18 stale rows; (2) create_scan() exception handler in server.py now maps litellm/openai errors to one of three friendly non-technical strings before persisting, so raw stack traces can never reach the DB or client again. Verified by 3 new pytest cases + full suite."
+}

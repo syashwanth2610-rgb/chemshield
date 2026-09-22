@@ -1,0 +1,9 @@
+INFO:     Started server process [37024]
+INFO:     Waiting for application startup.
+2026-09-22 07:09:13,012 - INFO - Storage initialized
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-09-22 07:12:32,711 - INFO - HTTP Request: POST https://integrations.emergentagent.com/llm/chat/completions "HTTP/1.1 200 OK"
+2026-09-22 07:13:39,356 - INFO - HTTP Request: POST https://integrations.emergentagent.com/llm/chat/completions "HTTP/1.1 200 OK"
+2026-09-22 07:16:50,376 - INFO - HTTP Request: POST https://integrations.emergentagent.com/llm/chat/completions "HTTP/1.1 200 OK"
+2026-09-22 07:19:17,569 - INFO - HTTP Request: POST https://integrations.emergentagent.com/llm/chat/completions "HTTP/1.1 200 OK"

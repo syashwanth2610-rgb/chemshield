@@ -1,0 +1,23 @@
+{
+  "summary": "Regression retest after EMERGENT_LLM_KEY fix in /app/backend/.env. All 17 pytest backend tests pass (17/17), including POST /api/scans with a real product-label JPEG going through emergentintegrations + Gemini 3 Flash Preview. Backend logs contain zero 'Invalid API key' / litellm.AuthenticationError occurrences after the last 'Application startup complete' timestamp — every prior AuthenticationError is stale (pre-restart, before line 1703 of backend.err.log). Auth (register/login/me + google callback rejection), scans CRUD, own-file download via Bearer and ?auth= query, cross-user 403, and stats summary all continue to work end-to-end.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "EMERGENT_LLM_KEY is now the real account key (sk-emergent-f4724A1Dc48B3Ad227) — verified working with gemini/gemini-3-flash-preview via emergentintegrations. Consider adding a startup-time smoke call or health probe that fails fast if the key is a placeholder, to prevent this class of bug from shipping again.",
+    "analyze_with_gemini() still has no timeout wrapper (asyncio.wait_for) — a hung LLM call will block the scan request; carry-over from iteration 1.",
+    "Old carry-over comments from iteration_1 still apply (file ACL prefix check brittleness, storage key no-refresh-on-401, no CSRF on cookie logout, server.py size ~490 LOC)."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100% (17/17)", "frontend": "not tested (skipped per request)"},
+  "test_credentials": "demo@chemshield.ai / Demo@1234 (seeded); EMERGENT_LLM_KEY = real account key in /app/backend/.env",
+  "seed_data_creation": "Reused /tmp/label.jpg (already present, 25KB Unsplash sample). Suite creates throwaway users test_*@chemshield.ai and one scan per run which is deleted at the end.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Bug 'Invalid API key on scan' is fixed and verified. Backend base URL from REACT_APP_BACKEND_URL. Sample image at /tmp/label.jpg; re-fetch via curl from https://images.unsplash.com/photo-1585421514738-01798e348b17?w=800&q=60 if missing. Backend log had 90 stale AuthenticationError lines from before the restart — anything up to line 1703 of backend.err.log is pre-fix; only entries AFTER 'Application startup complete' matter.",
+  "rca of the issue": "Bug: POST /api/scans reported 'invalid api key' from Gemini. RCA: /app/backend/.env shipped with the placeholder EMERGENT_LLM_KEY value from the integration playbook (sk-emergent-fB16835C940C5F850F). LiteLLM's Gemini adapter (routed through OpenAI-compatible client under emergentintegrations) validated the key against Emergent's LLM gateway and rejected it with openai.AuthenticationError → litellm.exceptions.AuthenticationError → emergentintegrations.llm.chat.ChatError. Fix: replaced EMERGENT_LLM_KEY with the real key sk-emergent-f4724A1Dc48B3Ad227 (retrieved via emergent_integrations_manager) and restarted backend. Verified: test_01_create_scan now returns 200 with structured scan fields and no auth error appears in backend logs post-restart."
+}

@@ -1,0 +1,93 @@
+{
+  "theme": "hybrid_fullstack",
+  "app_name": "CHEMSHIELD AI",
+  "tagline": "SCAN. UNDERSTAND. STAY SAFE.",
+  "image_urls": {
+    "hero_background": {
+      "url": "https://images.unsplash.com/photo-1639322537228-f710d846310a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzN8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGNoZW1pY2FsJTIwbW9sZWN1bGUlMjBuZXR3b3JrJTIwZGFya3xlbnwwfHx8fDE3ODk0NjIzMzh8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Abstract cubic molecule network for the hero section background to emphasize chemistry and AI."
+    },
+    "feature_ai_vision": {
+      "url": "https://images.unsplash.com/photo-1671417722838-3fbaa7f66203?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzF8MHwxfHNlYXJjaHwxfHxzY2llbnRpc3QlMjBsYWIlMjBmdXR1cmlzdGljJTIwZGFya3xlbnwwfHx8fDE3ODk0NjIzMzh8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Futuristic lab/scanner room for the Chemical Scanner page or empty states."
+    },
+    "hazard_texture": {
+      "url": "https://images.unsplash.com/photo-1555699875-5773b06e8ee2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwzfHxnbG93aW5nJTIwaGF6YXJkJTIwd2FybmluZyUyMHNpZ258ZW58MHx8fHwxNzg5NDYyMzM4fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Yellow skull hazard sign for the Safety Library or severe risk level accents."
+    }
+  },
+  "typography": {
+    "heading_font": "Outfit",
+    "body_font": "Manrope",
+    "strategy": "The 'Tech / AI' strategy. Use Outfit for high-impact, futuristic, yet professional headings. Use Manrope for high-legibility data reading in the dashboard. Large headings should have tight tracking.",
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tight font-bold",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl tracking-tight font-semibold",
+      "h3": "text-xl sm:text-2xl font-semibold",
+      "body": "text-base leading-relaxed",
+      "small_labels": "text-xs tracking-[0.2em] uppercase font-bold text-muted-foreground"
+    }
+  },
+  "colors": {
+    "archetype": "ARCHETYPE 5: LUXURY & TECH (Premium, Depth, Safety) mixed with neon alerts",
+    "dark_mode": {
+      "background": "#0B0C10",
+      "surface": "#1A1A2E",
+      "surface_glass": "rgba(26, 26, 46, 0.6)",
+      "border": "rgba(255, 255, 255, 0.1)",
+      "text_primary": "#FFFFFF",
+      "text_secondary": "#A0AEC0",
+      "accent_cyan": "#00F2FE",
+      "accent_green": "#38F9D7",
+      "accent_yellow": "#FDEB71",
+      "accent_red": "#FF0844"
+    },
+    "light_mode": {
+      "background": "#F8F9FA",
+      "surface": "#FFFFFF",
+      "surface_glass": "rgba(255, 255, 255, 0.7)",
+      "border": "rgba(0, 0, 0, 0.08)",
+      "text_primary": "#1A202C",
+      "text_secondary": "#4A5568",
+      "accent_cyan": "#007BFF",
+      "accent_green": "#059669",
+      "accent_yellow": "#D97706",
+      "accent_red": "#DC2626"
+    }
+  },
+  "visual_enhancers": {
+    "surfaces": "Glassmorphism for all major cards and sticky headers. Use backdrop-blur-xl with a 1px inner subtle border. NO completely transparent dropdowns or overlays over content. Add a subtle trace-beam effect on premium AI elements.",
+    "effects": "Soft glowing gradients behind primary cards. E.g., a cyan or green glow blur (blur-3xl) anchored behind the AI Scanner box.",
+    "shadows": "Ambient colored shadows for active states (e.g., shadow-[0_0_15px_rgba(0,242,254,0.3)] for a scanning state)."
+  },
+  "layouts": {
+    "spacing": "Generous Spacing (p-6, p-8, p-12). Bento grid system for the dashboard (grid-cols-1 md:grid-cols-3 lg:grid-cols-4).",
+    "marketing_page": "High impact asymmetry, massive typography, overlapping hero image overlay (bg-black/40), wide gap bento grids.",
+    "dashboard": "Dense, precise widget grids (gap-4 or gap-6). Left-aligned content for scanning and safety data. Clear, cardless look inside the glass panels."
+  },
+  "motion": {
+    "interactions": "Hover states must increase contrast and include micro-lifts (-translate-y-1) for glass cards.",
+    "animations": "AI scanning animation (moving linear gradient or scanner beam over the image). Animated gauge filling from 0 to actual risk level. Subtle molecule particles floating in the hero background."
+  },
+  "components": {
+    "buttons": "Rounded-xl or pill-shaped with sharp hover transitions and glowing shadows on primary actions.",
+    "shadcn_customization": "Heavily modify Shadcn cards to incorporate glassmorphism (bg-transparent, backdrop-blur-md, solid border-white/10). Modify tabs and dropdowns to have solid/frosted backgrounds to prevent text collision. Use Shadcn Recharts for the risk distribution donut chart.",
+    "icons": "Use lucide-react for safety and tech icons. Maintain consistent stroke width across all icons."
+  },
+  "accessibility": {
+    "contrast": "Text over gradients or images MUST have adequate drop-shadow or heavy overlay. Primary buttons must meet 4.5:1 contrast against their backgrounds.",
+    "testing": "All interactive elements (buttons, inputs, scanner dropzone, auth forms) MUST include a 'data-testid' attribute (e.g., data-testid='upload-chemical-button')."
+  },
+  "instructions_to_main_agent": [
+    "Build a cohesive React application using Shadcn UI mapping all requested pages (Landing, Auth, Dashboard, Scanner, Result, Map, History, Library, Settings).",
+    "Implement the 'data-testid' on all interactive elements as it is critical for testing.",
+    "Ensure both Light and Dark modes are fully supported. The transition should be seamless via a Settings toggle.",
+    "Integrate the 'Gemini 3 Flash' real AI vision logic (or mock it clearly with instructions if API key is not present), emphasizing the UI scanning animation.",
+    "Do NOT use pure transparent backgrounds on any floating elements like dropdowns, modals, or dialogs—they must use a solid or heavily blurred background.",
+    "Utilize 'lucide-react' for all iconography. Never use emojis as UI icons.",
+    "Use Recharts for the Risk Gauge (half donut) and Risk Distribution Donut chart.",
+    "Design the AI Insight card with a premium 'AI' aesthetic (gradient border or glowing edge).",
+    "Add animated background particles for molecules (e.g. using tsparticles or custom CSS animations) in the landing hero."
+  ],
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": "You tend to converge toward generic outputs. Break the 'AI slop' aesthetic. Create depth with layered Z-indexes and glassmorphism. Use the provided image URLs exclusively; never use placeholder images. Never use AI emojis (🤖🧠) as icons. Do not center align standard text flows, only hero headings. Use custom scrollbars. For interactive transitions, animate specific properties (e.g., transition-transform, transition-colors), never 'transition-all'. Make the UI feel premium, high-tech, and life-saving."
+}
